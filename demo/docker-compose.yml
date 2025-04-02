@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+
+  your_service:
+    build: .
+    depends_on:
+      - insider-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/my_app_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: iamroot
+    ports:
+      - "8080:8080"
+
+  insider-db:
+    image: postgres:16-alpine
+    container_name: insider-db-container
+    ports:
+      - "6531:6531"
+    environment:
+      - POSTGRES_PASSWORD=insider
+      - POSTGRES_USER=insider
+      - POSTGRES_DB=insider-bd
